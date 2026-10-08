@@ -6,7 +6,7 @@
 
 **Status**: Draft
 
-**Input**: User description: "Login Demo App - Develop a new login page for a retail application with email and password fields, show/hide password, Remember Me, Login, forgot password, sign up/register, clear validation messages, and a responsive desktop and mobile layout."
+**Input**: User description: "Login Demo App - Develop a new login page for a retail application with email address, password, and date of birth fields, show/hide password, Remember Me, Login, forgot password, sign up/register, clear validation messages, and a responsive desktop and mobile layout."
 
 ## Clarifications
 
@@ -20,35 +20,38 @@
 
 ### User Story 1 - Sign In to the Retail Demo (Priority: P1)
 
-A returning shopper enters their email address and password and submits the login form
-to access the signed-in retail demo state. They can reveal or conceal the password
-while entering it and optionally ask the application to remember their email address.
+A returning shopper enters their email address, password, and date of birth and
+submits the login form to access the signed-in retail demo state. They can reveal or
+conceal the password while entering it and optionally ask the application to remember
+their email address.
 
 **Why this priority**: Signing in is the primary purpose of the page and provides the
 main value to returning shoppers.
 
-**Independent Test**: Submit the documented demo credentials and verify the shopper
-reaches the demo's signed-in state; submit missing or invalid credentials and verify
-clear feedback is shown without signing them in.
+**Independent Test**: Submit the documented demo credentials together with a valid,
+non-future date of birth and verify the shopper reaches the demo's signed-in state;
+submit missing or invalid credentials or a missing/invalid DOB and verify clear
+feedback is shown without signing them in.
 
 **Acceptance Scenarios**:
 
 1. **Given** the login page is open, **When** a shopper submits the documented demo
-   email and password, **Then** the demo enters its signed-in state and clearly
-   communicates that result.
+   email and password with a valid date of birth, **Then** the demo enters its
+   signed-in state and clearly communicates that result.
 2. **Given** the password is entered, **When** the shopper toggles Show Password and
    Hide Password, **Then** the same password value is alternately readable and concealed.
 3. **Given** the Remember Me option is unchecked, **When** the shopper selects it and
    completes sign-in, **Then** the login preference is retained for a later visit
    by prefilling their email address; their password and signed-in state are not
    retained.
-4. **Given** required fields are empty or credentials are invalid, **When** the shopper
-   submits the form, **Then** clear validation feedback identifies each missing field
-   or reports that the credentials could not be accepted, and the shopper is not signed
-   in.
-5. **Given** the email address is malformed, **When** the shopper submits the form,
-   **Then** the page explains that a valid email address is required and does not
-   attempt sign-in.
+4. **Given** required fields are empty, credentials are invalid, or the date of birth
+   is missing, invalid, or in the future, **When** the shopper submits the form,
+   **Then** clear validation feedback identifies each missing field or reports that
+   the credentials could not be accepted, and the shopper is not signed in.
+5. **Given** the email address is malformed or the date of birth is missing or
+   invalid, **When** the shopper submits the form, **Then** the page explains that a
+   valid email address and valid date of birth are required and does not attempt
+   sign-in.
 6. **Given** the shopper is navigating the page with a keyboard, **When** they move
    between controls and activate an action, **Then** each field, checkbox, button,
    visibility control, and link can be reached and used.
@@ -99,6 +102,8 @@ a screen that clearly explains registration is demo-only and creates no real acc
 
 - Any mandatory field is empty when the shopper submits the form.
 - The email address is empty, malformed, or contains leading or trailing whitespace.
+- The date of birth is empty, invalid, or set to a future date; the page gives clear
+  feedback without attempting sign-in.
 - The submitted credentials do not match the documented demo credentials; the page
   gives clear feedback without implying that a real account was checked.
 - The shopper toggles password visibility before or after typing; the entered value is
@@ -114,7 +119,8 @@ a screen that clearly explains registration is demo-only and creates no real acc
 
 ### Functional Requirements
 
-- **FR-001**: The page MUST provide clearly labeled Email Address and Password fields.
+- **FR-001**: The page MUST provide clearly labeled Email Address, Password, and
+  Date of Birth fields.
 - **FR-002**: The page MUST provide a Show Password / Hide Password control that
   alternates password visibility without clearing or changing the entered value.
 - **FR-003**: The page MUST provide a Remember Me checkbox that, when selected,
@@ -122,8 +128,8 @@ a screen that clearly explains registration is demo-only and creates no real acc
   password or signed-in state.
 - **FR-004**: The page MUST provide a prominent Login action that submits the entered
   credentials to the simulated sign-in flow.
-- **FR-005**: The page MUST prevent sign-in when any mandatory field is missing and
-  MUST show a clear message identifying each missing field.
+- **FR-005**: The page MUST prevent sign-in when any mandatory field, including Date
+  of Birth, is missing and MUST show a clear message identifying each missing field.
 - **FR-006**: The page MUST validate the email address and show a clear message when its
   format is invalid; leading and trailing whitespace MUST be ignored during validation.
 - **FR-007**: The demo MUST accept only the documented demo credentials and MUST show
@@ -140,6 +146,10 @@ a screen that clearly explains registration is demo-only and creates no real acc
 - **FR-012**: The sign-in flow MUST be a clearly identified simulation, MUST document
   the demo credentials for shoppers or testers, and MUST NOT authenticate real
   accounts or depend on a real authentication service.
+- **FR-013**: The page MUST provide a Date of Birth field using an appropriate date
+  input/control; the value is mandatory, the user MUST NOT be able to enter or select
+  a future date, and a clear validation message MUST be shown when the DOB is missing
+  or invalid.
 
 ### Key Entities
 
@@ -165,6 +175,9 @@ a screen that clearly explains registration is demo-only and creates no real acc
   recovery and registration from the login page on their first attempt.
 - **SC-006**: At least 90% of usability-test participants rate the sign-in and
   validation experience as easy to understand (4 or 5 on a 5-point scale).
+- **SC-007**: In usability testing, at least 95% of shoppers can identify and correct
+  a missing or invalid Date of Birth field from the displayed feedback without
+  assistance.
 
 ## Assumptions
 
